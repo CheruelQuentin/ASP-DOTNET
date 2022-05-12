@@ -13,9 +13,9 @@ namespace APIrestFull.Controllers
             Context = context;
         }
         [HttpGet(Name = "/getId")]
-        public List<int> getId()
+        public List<Conso> getConso()
         {
-            return Context.getId();
+            return Context.getConso();
         }
     }
 }
