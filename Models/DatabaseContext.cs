@@ -48,26 +48,49 @@ namespace APIrestFull.Models
             }
             return conso;
         }
-        public List<Conso> getCommande()
+        public List<Commande> getCommande()
         {
-            List<Conso> conso = new List<Conso>();
+            List<Commande> commande = new List<Commande>();
             using (MySqlConnection connection = GetConnection())
             {
                 connection.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from CONSO", connection);
+                MySqlCommand cmd = new MySqlCommand("select * from Commande", connection);
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        conso.Add(new Conso()
+                        commande.Add(new Commande()
                         {
                             Id = reader.GetInt32("id"),
-                            Name = reader.GetString("nom")
                         });
                     }
                 }
             }
-            return conso;
+            return commande;
         }
+
+        public List<Contenir> getContenir()
+        {
+            List<Contenir> contenir = new List<Contenir>();
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from contenir", connection);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        contenir.Add(new Contenir()
+                        {
+                            ContenirConso = reader.GetInt32("contenir_conso"),
+                            ContenirCommande = reader.GetInt32("contenir_commande"),
+                            Etat = reader.GetString("etat")
+                        });
+                    }
+                }
+            }
+            return contenir;
+        }
+
     }
 }
