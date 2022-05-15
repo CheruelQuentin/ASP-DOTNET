@@ -48,5 +48,26 @@ namespace APIrestFull.Models
             }
             return conso;
         }
+        public List<Conso> getCommande()
+        {
+            List<Conso> conso = new List<Conso>();
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from CONSO", connection);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        conso.Add(new Conso()
+                        {
+                            Id = reader.GetInt32("id"),
+                            Name = reader.GetString("nom")
+                        });
+                    }
+                }
+            }
+            return conso;
+        }
     }
 }

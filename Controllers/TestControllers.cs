@@ -12,10 +12,15 @@ namespace APIrestFull.Controllers
         {
             Context = context;
         }
-        [HttpGet(Name = "/getId")]
+        [HttpGet(Name = "/getConso")]
         public List<Conso> getConso()
         {
             return Context.getConso();
+        }
+        [HttpGet(Name = "/getCommande")]
+        public List<Conso> getCommande()
+        {
+            return Context.getCommande();
         }
     }
 }
