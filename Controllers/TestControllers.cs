@@ -2,8 +2,6 @@
 using APIrestFull.Models;
 namespace APIrestFull.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
     public class TestControllers : Controller
     {
         private readonly DatabaseContext Context;
@@ -12,17 +10,22 @@ namespace APIrestFull.Controllers
         {
             Context = context;
         }
-        [HttpGet(Name = "/getConso")]
+        [Route("/getConso")]
+        [HttpGet]
         public List<Conso> getConso()
         {
             return Context.getConso();
         }
-        [HttpGet(Name = "/getCommande")]
+        [Route("/getCommande")]
+        [HttpGet]
         public List<Commande> getCommande()
         {
             return Context.getCommande();
         }
-        [HttpGet(Name = "/getContenir")]
+
+        
+        [Route("/getContenir")]
+        [HttpGet]
         public List<Contenir> getContenir()
         {
             return Context.getContenir();
