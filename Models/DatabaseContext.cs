@@ -92,5 +92,16 @@ namespace APIrestFull.Models
             return contenir;
         }
 
+        public int insertConso(string nom)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string query = "INSERT INTO Conso VALUES(0,@nom)";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@nom", nom);
+                return cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

@@ -30,5 +30,12 @@ namespace APIrestFull.Controllers
         {
             return Context.getContenir();
         }
+        
+        [Route("/insertConso")]
+        [HttpPost]
+        public int insertConso(string nom)
+        {
+            return Context.insertConso(nom);
+        }
     }
 }
