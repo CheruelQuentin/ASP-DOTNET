@@ -21,12 +21,13 @@ namespace APIrestFull.Models
         {
             optionsBuilder.UseSqlServer(_connectionString);
         }
-
+        //permet d'obtenir une connexion
         private MySqlConnection GetConnection()
         {
             Console.WriteLine(_connectionString);
             return new MySqlConnection(_connectionString);
         }
+        //permet d'aaficher toutes les conso
         public List<Conso> getConso()
         {
             List<Conso> conso = new List<Conso>();
@@ -48,7 +49,8 @@ namespace APIrestFull.Models
             }
             return conso;
         }
-        public List<Commande> getCommande()
+        //permet d'afficher toutes les commandes
+        public List<Commande> getOrder()
         {
             List<Commande> commande = new List<Commande>();
             using (MySqlConnection connection = GetConnection())
@@ -62,13 +64,14 @@ namespace APIrestFull.Models
                         commande.Add(new Commande()
                         {
                             Id = reader.GetInt32("id"),
+                            Name = reader.GetString("nom"),
                         });
                     }
                 }
             }
             return commande;
         }
-
+        //pemret d'afficher toute les commandes ainsi que leur état
         public List<Contenir> getContenir()
         {
             List<Contenir> contenir = new List<Contenir>();
@@ -91,7 +94,7 @@ namespace APIrestFull.Models
             }
             return contenir;
         }
-
+        //permet d'ajouter des conso dans la bdd
         public int insertConso(string nom)
         {
             using (MySqlConnection conn = GetConnection())
@@ -100,6 +103,46 @@ namespace APIrestFull.Models
                 string query = "INSERT INTO Conso VALUES(0,@nom)";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@nom", nom);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+        //permet de d'initialisé une commande et de la nommée
+        public int startNewOrder(string nom)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string query = "INSERT INTO Commande VALUES(0,@nom)";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@nom", nom);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+        //permet de crée la commande avec le plat souhaité
+        public int createOrder(int idcommande, int idconso, string etat)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string query = "INSERT INTO contenir VALUES(@idcommande, @idconso, @etat)";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idcommande", idcommande);
+                cmd.Parameters.AddWithValue("@idconso", idconso);
+                cmd.Parameters.AddWithValue("@etat", etat);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+        //permet de modifier l'etat de la commande et du plat
+        public int updateCommandStatus(int idcommande, int idconso, string etat)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string query = "UPDATE contenir SET etat = @etat WHERE contenir_commande = @idcommande and contenir_conso = @idconso;";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idcommande", idcommande);
+                cmd.Parameters.AddWithValue("@idconso", idconso);
+                cmd.Parameters.AddWithValue("@etat", etat);
                 return cmd.ExecuteNonQuery();
             }
         }
