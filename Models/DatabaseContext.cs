@@ -146,5 +146,16 @@ namespace APIrestFull.Models
                 return cmd.ExecuteNonQuery();
             }
         }
+        public int deleteConso(string nom)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string query = "DELETE from Conso where nom = @nom ";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@nom", nom);
+                return cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

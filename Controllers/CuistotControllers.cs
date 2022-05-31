@@ -57,5 +57,12 @@ namespace APIrestFull.Controllers
         {
             return Context.updateCommandStatus(idcommande, idconso, etat);
         }
+
+        [Route("/deleteConso")]
+        [HttpDelete]
+        public int DeleteEmploye(string nom)
+        {
+            return Context.deleteConso(nom);
+        }
     }
 }
