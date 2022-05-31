@@ -1,4 +1,7 @@
 # ASP-DOTNET
+J'ai travailler avec Loïc pour la base de donnée.
+Et Lucas m'a explique comment faire pour accès au donnée via swagger.
+
 Pour le fonctionnement du projet :
 - Créer un utilisateur bdd nommée login/psw  = quentin/quentin
 ou
